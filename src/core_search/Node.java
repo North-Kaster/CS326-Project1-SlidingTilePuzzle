@@ -3,8 +3,8 @@ package core_search;
 /** A generic implementation of the search tree node
  * (See AIMA 4e, page 73, Ch 3.3.2 for a description)
  *
- * S represents the date type of state
- * A represents the date type of action
+ * S represents the data type of state
+ * A represents the data type of action
  */
 public class Node<S, A> {
     private final S STATE;

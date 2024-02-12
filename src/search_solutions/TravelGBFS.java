@@ -21,9 +21,7 @@ public class TravelGBFS extends BaseSearch<String, String> {
     public static void main(String[] args){
         TravelGBFS agent = new TravelGBFS("RomaniaMap.txt",
                 "RomaniaMapEstimates.txt");
-
         agent.search();
-
     }
 
     public static class CompareEstimates implements Comparator<Node<String, String>> {
