@@ -8,13 +8,13 @@ import search_problems.SlidingTilePuzzle;
 import java.util.Comparator;
 import java.util.List;
 
-public class SlidingTileGBFS extends BaseSearch<List<Integer>, String> {
-    public SlidingTileGBFS() {
+public class SlidingTileGBFSSum extends BaseSearch<List<Integer>, String> {
+    public SlidingTileGBFSSum() {
         super(new SlidingTilePuzzle(),
                 new SortedQueue<>(new CompareEstimates(new SlidingTilePuzzle())));
     }
     public static void main(String[] args) {
-        SlidingTileGBFS agent = new SlidingTileGBFS();
+        SlidingTileGBFSSum agent = new SlidingTileGBFSSum();
         agent.search();
     }
     public static class CompareEstimates implements Comparator<Node<List<Integer>, String>> {

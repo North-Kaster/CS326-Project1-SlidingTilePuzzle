@@ -13,7 +13,7 @@ public class SlidingTilePuzzle implements Problem<List<Integer>,String> {
     private final List<Integer> INITIAL_STATE =
             new ArrayList<>(List.of(7,2,4, 5,0,6, 8,3,1));
     private final List<Integer>  GOAL_STATE =
-        new ArrayList<>(List.of(0,1,2, 3,4,5, 6,7,8));
+            new ArrayList<>(List.of(0,1,2, 3,4,5, 6,7,8));
     private final int BOARD_SIZE;
 
     private final Map<String, Integer> estimatedDistances = new HashMap<>();
@@ -88,7 +88,7 @@ public class SlidingTilePuzzle implements Problem<List<Integer>,String> {
         for (int i = 0; i < state.size(); i++) {
             int value = state.get(i);
             if (value != 0) {
-                int goalIndex = state.indexOf(value);
+                int goalIndex = state.indexOf(i);
                 int currentRow = i % BOARD_SIZE; // current row
                 int currentColumn = i / BOARD_SIZE; // current column
                 int goalRow = goalIndex % BOARD_SIZE; // goal row

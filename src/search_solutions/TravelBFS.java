@@ -13,7 +13,6 @@ public class TravelBFS extends BaseSearch<String, String> {
         super(new Travel(mapFile), new FIFOQueue<>());
     }
 
-
     public static void main(String[] args) {
         TravelBFS t = new TravelBFS("RomaniaMap.txt");
         t.search();
