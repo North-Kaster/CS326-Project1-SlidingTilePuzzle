@@ -2,10 +2,8 @@ package search_problems;
 
 import core_search.Problem;
 import core_search.Tuple;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
+import java.util.*;
 
 import static java.util.Collections.swap;
 public class SlidingTilePuzzle implements Problem<List<Integer>,String> {
@@ -81,10 +79,9 @@ public class SlidingTilePuzzle implements Problem<List<Integer>,String> {
         System.out.println(); // Add a new line at the end to separate prints
     }
 
-    // Heuristics
-
+    // Heuristic builders
     public int buildSumOfDistances(List<Integer> state) {
-        int sum = 0;
+        int sumOfDistances = 0;
         for (int i = 0; i < state.size(); i++) {
             int value = state.get(i);
             if (value != 0) {
@@ -93,9 +90,19 @@ public class SlidingTilePuzzle implements Problem<List<Integer>,String> {
                 int currentColumn = i / BOARD_SIZE; // current column
                 int goalRow = goalIndex % BOARD_SIZE; // goal row
                 int goalColumn = goalIndex / BOARD_SIZE; // goal column
-                sum += Math.abs(currentRow - goalRow) + Math.abs(currentColumn - goalColumn);
+                sumOfDistances += Math.abs(currentRow - goalRow) + Math.abs(currentColumn - goalColumn);
             }
         }
-        return sum;
+        return sumOfDistances;
+    }
+
+    public int buildMisplacedTiles(List<Integer> state) {
+        int numberOfMisplacedTiles = 0;
+        for (int i = 0; i < state.size(); i++) {
+            if (!Objects.equals(state.get(i), GOAL_STATE.get(i))){
+                numberOfMisplacedTiles++;
+            }
+        }
+        return numberOfMisplacedTiles;
     }
 }
