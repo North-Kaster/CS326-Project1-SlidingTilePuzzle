@@ -3,7 +3,10 @@ package search_problems;
 import core_search.Problem;
 import core_search.Tuple;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import static java.util.Collections.swap;
 public class SlidingTilePuzzle implements Problem<List<Integer>,String> {
     // empty cell is 0
@@ -12,6 +15,8 @@ public class SlidingTilePuzzle implements Problem<List<Integer>,String> {
     private final List<Integer>  GOAL_STATE =
         new ArrayList<>(List.of(0,1,2, 3,4,5, 6,7,8));
     private final int BOARD_SIZE;
+
+    private final Map<String, Integer> estimatedDistances = new HashMap<>();
     public SlidingTilePuzzle(){
         BOARD_SIZE = (int) Math.sqrt(INITIAL_STATE.size());
     }
@@ -64,6 +69,7 @@ public class SlidingTilePuzzle implements Problem<List<Integer>,String> {
     }
 
     public void printState(List<Integer> state){
+        // Formatting the print to look like a board instead of an array
         int count = 0;
         for (Integer integer : state) {
             System.out.print(integer + " ");
@@ -73,5 +79,23 @@ public class SlidingTilePuzzle implements Problem<List<Integer>,String> {
             }
         }
         System.out.println(); // Add a new line at the end to separate prints
+    }
+
+    // Heuristics
+
+    public int buildSumOfDistances(List<Integer> state) {
+        int sum = 0;
+        for (int i = 0; i < state.size(); i++) {
+            int value = state.get(i);
+            if (value != 0) {
+                int goalIndex = state.indexOf(value);
+                int currentRow = i % BOARD_SIZE; // current row
+                int currentColumn = i / BOARD_SIZE; // current column
+                int goalRow = goalIndex % BOARD_SIZE; // goal row
+                int goalColumn = goalIndex / BOARD_SIZE; // goal column
+                sum += Math.abs(currentRow - goalRow) + Math.abs(currentColumn - goalColumn);
+            }
+        }
+        return sum;
     }
 }
