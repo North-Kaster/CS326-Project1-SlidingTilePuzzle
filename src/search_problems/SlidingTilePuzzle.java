@@ -2,21 +2,25 @@ package search_problems;
 
 import core_search.Problem;
 import core_search.Tuple;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
+import java.util.*;
 
 import static java.util.Collections.swap;
 public class SlidingTilePuzzle implements Problem<List<Integer>,String> {
-    // empty cell is 0
-    private final List<Integer> INITIAL_STATE =
-            new ArrayList<>(List.of(7,2,4, 5,0,6, 8,3,1));
-    private final List<Integer>  GOAL_STATE =
-            new ArrayList<>(List.of(0,1,2, 3,4,5, 6,7,8));
-    private final int BOARD_SIZE;
+    // 0 means empty cell
 
-    private final Map<String, Integer> estimatedDistances = new HashMap<>();
+    //8-tile test case
+//    private final List<Integer> INITIAL_STATE =
+//            new ArrayList<>(List.of(7,2,4, 5,0,6, 8,3,1));
+//    private final List<Integer>  GOAL_STATE =
+//            new ArrayList<>(List.of(0,1,2, 3,4,5, 6,7,8));
+
+    // 15-tile test case
+    private final List<Integer> INITIAL_STATE =
+            new ArrayList<>(List.of(12,1,2,15, 11,6,5,8, 7,10,9,4, 0,13,14,3));
+    private final List<Integer>  GOAL_STATE =
+            new ArrayList<>(List.of(1,2,3,4, 5,6,7,8, 9,10,11,12, 13,14,15,0));
+    private final int BOARD_SIZE;
     public SlidingTilePuzzle(){
         BOARD_SIZE = (int) Math.sqrt(INITIAL_STATE.size());
     }
@@ -63,11 +67,9 @@ public class SlidingTilePuzzle implements Problem<List<Integer>,String> {
     public List<Integer> initialState() {
         return INITIAL_STATE;
     }
-
     public List<Integer> goalState() {
         return GOAL_STATE;
     }
-
     public void printState(List<Integer> state){
         // Formatting the print to look like a board instead of an array
         int count = 0;
@@ -81,21 +83,30 @@ public class SlidingTilePuzzle implements Problem<List<Integer>,String> {
         System.out.println(); // Add a new line at the end to separate prints
     }
 
-    // Heuristics
-
+    // Heuristic builders
     public int buildSumOfDistances(List<Integer> state) {
-        int sum = 0;
+        int sumOfDistances = 0;
         for (int i = 0; i < state.size(); i++) {
-            int value = state.get(i);
-            if (value != 0) {
-                int goalIndex = state.indexOf(i);
-                int currentRow = i % BOARD_SIZE; // current row
-                int currentColumn = i / BOARD_SIZE; // current column
-                int goalRow = goalIndex % BOARD_SIZE; // goal row
-                int goalColumn = goalIndex / BOARD_SIZE; // goal column
-                sum += Math.abs(currentRow - goalRow) + Math.abs(currentColumn - goalColumn);
+            int currentValue = state.get(i);
+            if (currentValue != 0) {
+                int goalIndex = GOAL_STATE.indexOf(currentValue);
+                int currentRow = i % BOARD_SIZE;
+                int currentColumn = i / BOARD_SIZE;
+                int goalRow = goalIndex % BOARD_SIZE;
+                int goalColumn = goalIndex / BOARD_SIZE;
+                sumOfDistances += Math.abs(currentRow - goalRow) + Math.abs(currentColumn - goalColumn);
             }
         }
-        return sum;
+        return sumOfDistances;
+    }
+
+    public int buildMisplacedTiles(List<Integer> state) {
+        int numberOfMisplacedTiles = 0;
+        for (int i = 0; i < state.size(); i++) {
+            if (!Objects.equals(state.get(i), GOAL_STATE.get(i))){
+                numberOfMisplacedTiles++;
+            }
+        }
+        return numberOfMisplacedTiles;
     }
 }
