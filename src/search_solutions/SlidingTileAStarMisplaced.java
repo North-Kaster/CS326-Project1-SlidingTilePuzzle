@@ -12,7 +12,7 @@ public class SlidingTileAStarMisplaced extends BaseSearch<List<Integer>, String>
 
     public SlidingTileAStarMisplaced() {
         super(new SlidingTilePuzzle(),
-                new SortedQueue<>(new SlidingTileAStarSum.CompareEstimates(new SlidingTilePuzzle())));
+                new SortedQueue<>(new SlidingTileAStarMisplaced.CompareEstimates(new SlidingTilePuzzle())));
     }
     public static void main(String[] args) {
         SlidingTileAStarMisplaced agent = new SlidingTileAStarMisplaced();
